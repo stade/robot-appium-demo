@@ -18,113 +18,63 @@ ${CLEAR_BUTTON_DEVICE}    xpath=//*[@text='CLR']
 *** Test Cases ***
 1+1=2 With Emulator
     [Tags]   Emulator    Demo
-    Click Button With Text    1
-    Click Button With Text    +
-    Click Button With Text    1
-    Click Button With Text    =
+    Click Buttons With Texts    1    +    1    =
     Result Should Be    2
 
 100/10=10 With Emulator
     [Tags]   Emulator    Demo
-    Click Button With Text    1
-    Click Button With Text    0
-    Click Button With Text    0
-    Click Button With Text    ÷
-    Click Button With Text    1
-    Click Button With Text    0
-    Click Button With Text    =
+    Click Buttons With Texts     1    0    0     ÷    1    0    =
     Result Should Be    10
 
 6×6=36 With Emulator
     [Tags]   Emulator    Demo
-    Click Button With Text    6
-    Click Button With Text    ×
-    Click Button With Text    6
-    Click Button With Text    =
+    Click Buttons With Texts    6    ×    6    =
     Result Should Be    36
 
 50−55=−5 With Emulator
     [Tags]   Emulator    Demo
-    Click Button With Text    5
-    Click Button With Text    0
-    Click Button With Text    −
-    Click Button With Text    5
-    Click Button With Text    5
-    Click Button With Text    =
+    Click Buttons With Texts    5    0    −    5    5    =
     Result Should Be    −5
 
 10.10×10.10=102.01 With Emulator
     [Tags]   Emulator    Demo
-    Click Button With Text    1
-    Click Button With Text    0
-    Click Button With Text    .
-    Click Button With Text    1
-    Click Button With Text    0
-    Click Button With Text    ×
-    Click Button With Text    1
-    Click Button With Text    0
-    Click Button With Text    .
-    Click Button With Text    1
-    Click Button With Text    0
-    Click Button With Text    =
+    Click Buttons With Texts     1    0    .    1    0    ×    1    0    .   1    0    =
     Result Should Be    102.01
 
 1+1=2 With Device
     [Tags]    Device    Demo
-    Click Button With Text    1
-    Click Button With Text    +
-    Click Button With Text    1
-    Click Button With Text    =
+    Click Buttons With Texts    1    +    1    =
     Result Should Be    2
 
 100/10=10 With Device
     [Tags]    Device    Demo
-    Click Button With Text    1
-    Click Button With Text    0
-    Click Button With Text    0
-    Click Button With Text    ÷
-    Click Button With Text    1
-    Click Button With Text    0
-    Click Button With Text    =
+    Click Buttons With Texts     1    0    0     ÷    1    0    =
     Result Should Be    10
 
 6×6=36 With Device
     [Tags]    Device    Demo
-    Click Button With Text    6
-    Click Button With Text    ×
-    Click Button With Text    6
-    Click Button With Text    =
+    Click Buttons With Texts    6    ×    6    =
     Result Should Be    36
 
 50−55=−5 With Device
     [Tags]    Device    Demo
-    Click Button With Text    5
-    Click Button With Text    0
-    Click Button With Text    −
-    Click Button With Text    5
-    Click Button With Text    5
-    Click Button With Text    =
+    Click Buttons With Texts    5    0    −    5    5    =
     Result Should Be    −5
 
-10.10×10.10=102.01 With Device
+10,10×10,10=102,01 With Device
     [Tags]    Device    Demo
-    Click Button With Text    1
-    Click Button With Text    0
-    Click Button With Text    ,
-    Click Button With Text    1
-    Click Button With Text    0
-    Click Button With Text    ×
-    Click Button With Text    1
-    Click Button With Text    0
-    Click Button With Text    ,
-    Click Button With Text    1
-    Click Button With Text    0
-    Click Button With Text    =
+    Click Buttons With Texts     1    0    ,    1    0    ×    1    0    ,   1    0    =
     Result Should Be    102,01
 
 *** Keywords ***
+Click Buttons With Texts
+    [Arguments]    @{texts}
+    :FOR    ${text}    IN    @{texts}
+    \    Click Button With Text    ${text}
+
 Clear Calculator
-    ${passed}=    Run Keyword And Return Status    Click Element    ${CLEAR_BUTTON}
+    [Documentation]    Device and Emulator contain different button texts for clear button.
+    ${passed}=    Run Keyword And Return Status    Click Element    ${CLEAR_BUTTON_EMULATOR}
     Run Keyword Unless    ${passed}    Click Element    ${CLEAR_BUTTON_DEVICE}
 
 Result Should Be
@@ -142,8 +92,8 @@ Hide Startup Notification
 Open Calculator Application
     Open Application
     ...    ${REMOTE_URL}
-    ...    platformName=Android
+    ...    platformName=${PLATFORM_NAME}
     ...    platformVersion=${PLATFORM_VERSION}
-    ...    deviceName=192.168.58.101:5555
+    ...    deviceName=${DEVICE_NAME}
     ...    app=${APP}
     ...    automationName=appium
