@@ -12,19 +12,20 @@ ${DEVICE_NAME}    Android Emulator
 ${APP}            ${EXECDIR}/apk/com.android2.calculator3_63.apk
 ${OK_BUTTON}    xpath=//*[@text='OK']
 ${RESULT_AREA}    xpath=//android.widget.EditText
-${CLEAR_BUTTON}    xpath=//*[@text='CLEAR']
+${CLEAR_BUTTON_EMULATOR}    xpath=//*[@text='CLEAR']
+${CLEAR_BUTTON_DEVICE}    xpath=//*[@text='CLR']
 
 *** Test Cases ***
-1+1=2
-    [Tags]   Demo
+1+1=2 With Emulator
+    [Tags]   Emulator    Demo
     Click Button With Text    1
     Click Button With Text    +
     Click Button With Text    1
     Click Button With Text    =
     Result Should Be    2
 
-100/10=10
-    [Tags]   Demo
+100/10=10 With Emulator
+    [Tags]   Emulator    Demo
     Click Button With Text    1
     Click Button With Text    0
     Click Button With Text    0
@@ -34,16 +35,16 @@ ${CLEAR_BUTTON}    xpath=//*[@text='CLEAR']
     Click Button With Text    =
     Result Should Be    10
 
-6×6=36
-    [Tags]   Demo
+6×6=36 With Emulator
+    [Tags]   Emulator    Demo
     Click Button With Text    6
     Click Button With Text    ×
     Click Button With Text    6
     Click Button With Text    =
     Result Should Be    36
 
-50−55=−5
-    [Tags]   Demo
+50−55=−5 With Emulator
+    [Tags]   Emulator    Demo
     Click Button With Text    5
     Click Button With Text    0
     Click Button With Text    −
@@ -52,8 +53,8 @@ ${CLEAR_BUTTON}    xpath=//*[@text='CLEAR']
     Click Button With Text    =
     Result Should Be    −5
 
-10.10×10.10=102.01
-    [Tags]   Demo
+10.10×10.10=102.01 With Emulator
+    [Tags]   Emulator    Demo
     Click Button With Text    1
     Click Button With Text    0
     Click Button With Text    .
@@ -68,9 +69,63 @@ ${CLEAR_BUTTON}    xpath=//*[@text='CLEAR']
     Click Button With Text    =
     Result Should Be    102.01
 
+1+1=2 With Device
+    [Tags]    Device    Demo
+    Click Button With Text    1
+    Click Button With Text    +
+    Click Button With Text    1
+    Click Button With Text    =
+    Result Should Be    2
+
+100/10=10 With Device
+    [Tags]    Device    Demo
+    Click Button With Text    1
+    Click Button With Text    0
+    Click Button With Text    0
+    Click Button With Text    ÷
+    Click Button With Text    1
+    Click Button With Text    0
+    Click Button With Text    =
+    Result Should Be    10
+
+6×6=36 With Device
+    [Tags]    Device    Demo
+    Click Button With Text    6
+    Click Button With Text    ×
+    Click Button With Text    6
+    Click Button With Text    =
+    Result Should Be    36
+
+50−55=−5 With Device
+    [Tags]    Device    Demo
+    Click Button With Text    5
+    Click Button With Text    0
+    Click Button With Text    −
+    Click Button With Text    5
+    Click Button With Text    5
+    Click Button With Text    =
+    Result Should Be    −5
+
+10.10×10.10=102.01 With Device
+    [Tags]    Device    Demo
+    Click Button With Text    1
+    Click Button With Text    0
+    Click Button With Text    ,
+    Click Button With Text    1
+    Click Button With Text    0
+    Click Button With Text    ×
+    Click Button With Text    1
+    Click Button With Text    0
+    Click Button With Text    ,
+    Click Button With Text    1
+    Click Button With Text    0
+    Click Button With Text    =
+    Result Should Be    102,01
+
 *** Keywords ***
 Clear Calculator
-    Click Element    ${CLEAR_BUTTON}
+    ${passed}=    Run Keyword And Return Status    Click Element    ${CLEAR_BUTTON}
+    Run Keyword Unless    ${passed}    Click Element    ${CLEAR_BUTTON_DEVICE}
 
 Result Should Be
     [Arguments]    ${expected}
@@ -78,6 +133,7 @@ Result Should Be
 
 Click Button With Text
     [Arguments]    ${text}
+    Wait Until Page Contains Element    xpath=//android.widget.Button[@text='${text}']    10 s
     Click Element    xpath=//android.widget.Button[@text='${text}']
 
 Hide Startup Notification
