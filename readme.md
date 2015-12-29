@@ -1,7 +1,10 @@
 # Robot+appium-demo
 
 Basic demo for running robot framework tests with Appium using calculator application for android.
-Works & tested with Ubuntu/Linux Mint 17.2
+
+Demo is developed and works at least with following environments:
+* Ubuntu/Linux Mint 17.2 OS
+* Nexus 5 emulator and real Nexus 5 device.
 
 # Required dependencies
 * Robot Framework
@@ -31,8 +34,13 @@ How to run emulator:
 How to run uiautomationviewer:
 * ``` /Android/Sdk/tools$ ./uiautomatorviewer```
 
-## Running the demo
-* ```pybot robot+appium-demo.robot```
+## Running the demo with emulator or device.
+
+Use *emulator* test tag to run tests with emulator:
+* ```pybot -i emulator robot+appium-demo.robot```
+
+Use *device* test tag to run tests with device:
+* ```pybot -i device robot+appium-demo.robot```
 
 ## Appium
 Start the Appium server before running tests by running command:
