@@ -12,9 +12,14 @@ Demo is developed and works at least with following environments:
 * Appium
 * Android SDK
 
-## Installing dependecies
+## Installing dependencies
 
-* TODO...
+* ```pip install robotframework-appiumlibrary```
+*  install appium & node:    http://stackoverflow.com/a/30374094
+*  install android tools etc: http://bernaerts.dyndns.org/linux/74-ubuntu/328-ubuntu-trusty-android-adb-fastboot-qtadb
+*  add to path (.bashrc etc.):
+* ```export ANDROID_HOME=/home/username/Android/Sdk```
+* ```export PATH=$PATH:/usr/local/adt/android-studio/bin```
 
 ## APK
 
